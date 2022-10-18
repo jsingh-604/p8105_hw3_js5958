@@ -127,9 +127,13 @@ dim_modified =
 
 ```
 
-We took the intial dataset and performs modifications (pivot, mutate) which would help us analyse the data and extract more meaning out of it. The modified data set had dimensions **`r dim_modified`** and whereas the original dataset has dimensions **`r dim_accel`**. 
-The dataset is essentially the 5 weeks of readings from an accelerometer worn be 63 year-old male. The readings are the activity counts in a short period; one-minute intervals. From the modified data, which has a dimension of **`r vars_modified`** we can see that a total of 50400 minutes have been recorded which are the number of rows of the modified dataset due to our pivot. Our original dataset has dimension.
-Also, the patient has been observed over a total of 35 days. We can verify it too as 24*35*60 = 50400. Also, there 1440 activites in the initial dataset which are the total number of minutes in a day. In terms of variables of the modified dataset. We have 
+We took the initial dataset and performed modifications (pivot, mutate) as per the question requirements which would help us analyse the data and extract more meaning out of it. The modified data set had dimensions **`r dim_modified`** and whereas the original data has dimensions **`r dim_accel`**. 
+
+The data is essentially  5 weeks of readings from an accelerometer worn be 63 year-old male with BMI 25, who was admitted to the Advanced Cardiac Care Center of Columbia University Medical Center and diagnosed with congestive heart failure (CHF).
+
+The readings are the activity counts in a short period; one-minute intervals. From the modified data, which has a dimension of **`r dim_modified`** we can see that a total of 50400 minutes have been recorded which are the number of rows of the modified data due to our pivot. Our original dataset has dimension **`r dim_accel`** as stated previously too. 
+
+Also, the patient has been observed over a total of 35 days. We can verify it as $24*35*60$ = $50400$. Also, there are 1440 activities in the initial data which are the total number of minutes in a day. In terms of variables of the modified dataset. The key variables in the tidied data are **`r vars_modified`**
 
 
 ## Subpart 2
@@ -141,12 +145,12 @@ modified_df %>%
   group_by(Day) %>%
   summarize(Total_Activity_Count = sum(activity_count, na.rm = TRUE)) 
 ```
-From the table above we can recognize a trend that total activity count is higher on Wednesday, Thursday, and Friday than compared to the other days. And we can see that the total activity is much lower on Saturday when compared to other days. This is plausible as Saturday is on a weekend, a holiday. 
+From the table above we can recognize a trend that total activity count is higher on Wednesday, Thursday, and Friday than compared to the other days. And we can see that the total activity is much lower on Saturday when compared to other days. This is plausible as Saturday is on a weekend which implies less activity due it being a holiday. 
 
 
 ## Subpart 3
 
-Now we will make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week
+Now we will make a single-panel plot that shows the 24-hour activity time courses for each day and use color to indicate day of the week:
 ```{r}
 modified_df %>%
   group_by(day, minute) %>%
@@ -204,9 +208,10 @@ Fetching summary statistics for each of the variables to get an estimate of the 
 hist(modified_df$snow)
 ```
 
-From the histogram we can see that 0 is the most commonly observed value. 
+From the histogram we can see that 0 is the most commonly observed value. This is because it only snows just a few times per year.
 
 # Subpart 2
+
 Following is a two-panel plot showing the average max temperature in January and in July in each station across years. 
 ```{r}
 modified_df$id = factor(modified_df$id)
@@ -236,13 +241,11 @@ plot2 = ggplot(data = sub_df_july,aes(x = id, y = mean_tmax)) + geom_bar(stat='i
 grid.arrange(plot1,plot2, ncol=1)
 ```
 
-The above two panel plot is a bar plot of the average max temperature across all the different station. Each bar represents a different station. We can see that can see that the January plot has a higher range difference than the July plot. This is plausible as weather tends have higher variation in winter months than summer. For January, we can see that 1 station has as mean tmax value greater than 7.5 and 1 station has mean tmax value less than -7.5. These can be considered outliers. There seems to be some structure in the July barplot, as all the mean tmax values are grate than 20 Degree Celsius. 
-
-
+The above two-panel plot consists of bar plots of the average max temperature in January and in July in each station across years. Each bar represents a different station. We can see that can see that the January plot has a higher range difference than the July plot. The range difference is basically $ Max Value - Min Value $. This is plausible as weather tends have higher variation in winter months than summer. For January, we can see that 1 station has as average tmax value greater than 7.5 and 1 station has mean tmax value less than -7.5. There seems to be some structure in the July barplot, as all the average tmax values are greater than 20 Degree Celsius. 
 
 # Subpart 3 
-Following is a two-panel plot showing: (i) tmax vs tmin for the full dataset; and (ii) make a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
 
+Following is a two-panel plot showing: (i) tmax vs tmin for the full dataset; and (ii) a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
 ```{r}
 plot1 = modified_df %>%
   select(tmax, tmin) %>% 
