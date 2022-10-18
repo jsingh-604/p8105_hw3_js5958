@@ -58,7 +58,8 @@ Our next table shows the three most popular items in aisles `baking ingredients`
 
 ```{r}
 instacart %>% 
-  filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) %>%
+  filter(aisle %in% c("baking ingredients", "dog food care", 
+                      "packaged vegetables fruits")) %>%
   group_by(aisle) %>% 
   count(product_name) %>% 
   mutate(rank = min_rank(desc(n))) %>% 
@@ -88,7 +89,7 @@ accel_df = read_csv('/Users/jag/Downloads/accel_data.csv') %>%
   janitor::clean_names() 
 ```
 
-Now we will fetch the dimensions and the variables. Following that we will wrangle the data.
+Now we will fetch the dimensions and the variables. Following that we will wrangle the data:
 ```{r}
 
 vars_accel = 
@@ -108,13 +109,15 @@ modified_df <-
 modified_df <- 
   modified_df %>%
   mutate(
-    day = factor(day, levels = c("Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")),
+    day = factor(day, levels = c("Sunday","Monday", "Tuesday", "Wednesday", 
+                                 "Thursday", "Friday", "Saturday")),
     minute = as.integer(minute),
     hour = as.integer(minute %/% 60), 
     week = as.integer(week), 
     weekday_vs_weekend = 
       case_when(
-           day %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") ~ "Weekday", 
+           day %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday") 
+           ~ "Weekday", 
            day %in% c("Saturday", "Sunday") ~ "Weekend"),
     day_id = as.integer(day_id)) 
 
@@ -127,13 +130,14 @@ dim_modified =
 
 ```
 
-We took the initial dataset and performed modifications (pivot, mutate) as per the question requirements which would help us analyse the data and extract more meaning out of it. The modified data set had dimensions **`r dim_modified`** and whereas the original data has dimensions **`r dim_accel`**. 
+
+We took the initial dataset and performed modifications (pivot, mutate) as per the question requirements which would help us analyse the data and extract more meaning out of it. The modified data set had dimensions **[`r dim_modified`]** [rows, columns] and whereas the original data has dimensions **[`r dim_accel`]**. 
 
 The data is essentially  5 weeks of readings from an accelerometer worn be 63 year-old male with BMI 25, who was admitted to the Advanced Cardiac Care Center of Columbia University Medical Center and diagnosed with congestive heart failure (CHF).
 
-The readings are the activity counts in a short period; one-minute intervals. From the modified data, which has a dimension of **`r dim_modified`** we can see that a total of 50400 minutes have been recorded which are the number of rows of the modified data due to our pivot. Our original dataset has dimension **`r dim_accel`** as stated previously too. 
+The readings are the activity counts in a short period; one-minute intervals. From the modified data, which has a dimension of **[`r dim_modified`]** we can see that a total of 50400 minutes have been recorded which are the number of rows of the modified data due to our pivot. Our original dataset has dimension **[`r dim_accel`]** as stated previously too. 
 
-Also, the patient has been observed over a total of 35 days. We can verify it as $24*35*60$ = $50400$. Also, there are 1440 activities in the initial data which are the total number of minutes in a day. In terms of variables of the modified dataset. The key variables in the tidied data are **`r vars_modified`**
+Also, the patient has been observed over a total of 35 days. We can verify it as $24*35*60$ = $50400$. Also, there are 1440 activities in the initial data which are the total number of minutes in a day. In terms of variables of the modified dataset. The key variables in the tidied data are **[`r vars_modified`]**
 
 
 ## Subpart 2
@@ -166,6 +170,8 @@ modified_df %>%
     labels = c("0hr", "4hr", "8hr", "12hr", "16hr", "20hr", "24hr"))
 
 ```
+
+
 From the above single panel scatter plot we can see that the highest activity count is around 8500. We can also see that the activity count is higher later at night around 9 pm on Friday, Saturday,Monday, Wednesday. During the first few days of the week, we can see that the activity count is higher around noon time. And we can see that the activity count is the lowest from around midnight till morning around 8 am. This gives an estimate of the patient's sleeping schedule .
 
 
@@ -227,13 +233,15 @@ sub_df_july= subset(drop_na(modified_df), month == '07') %>%
   group_by(id) %>%
   summarize(mean_tmax = mean(tmax))
 
-plot1 = ggplot(data = sub_df_jan,aes(x = id, y = mean_tmax)) + geom_bar(stat='identity', color = 'blue') +
+plot1 = ggplot(data = sub_df_jan,aes(x = id, y = mean_tmax)) + 
+  geom_bar(stat='identity', color = 'blue') +
   labs(title = 'January') +
     theme(
         axis.text.x=element_blank(),
         axis.ticks.x=element_blank())
 
-plot2 = ggplot(data = sub_df_july,aes(x = id, y = mean_tmax)) + geom_bar(stat='identity', color = 'pink') +
+plot2 = ggplot(data = sub_df_july,aes(x = id, y = mean_tmax)) + 
+  geom_bar(stat='identity', color = 'pink') +
   labs(title = 'July') +
     theme(
         axis.text.x=element_blank(),
