@@ -216,7 +216,7 @@ hist(modified_df$snow)
 
 From the histogram we can see that 0 is the most commonly observed value. This is because it only snows just a few times per year.
 
-# Subpart 2
+## Subpart 2
 
 Following is a two-panel plot showing the average max temperature in January and in July in each station across years. 
 ```{r}
@@ -251,7 +251,7 @@ grid.arrange(plot1,plot2, ncol=1)
 
 The above two-panel plot consists of bar plots of the average max temperature in January and in July in each station across years. Each bar represents a different station. We can see that can see that the January plot has a higher range difference than the July plot. The range difference is basically $ Max Value - Min Value $. This is plausible as weather tends have higher variation in winter months than summer. For January, we can see that 1 station has as average tmax value greater than 7.5 and 1 station has mean tmax value less than -7.5. There seems to be some structure in the July barplot, as all the average tmax values are greater than 20 Degree Celsius. 
 
-# Subpart 3 
+## Subpart 3 
 
 Following is a two-panel plot showing: (i) tmax vs tmin for the full dataset; and (ii) a plot showing the distribution of snowfall values greater than 0 and less than 100 separately by year.
 ```{r}
